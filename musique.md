@@ -12,16 +12,16 @@ Supprimer tous les albums dont le nom contient "music"
 > SELECT * from albums where title not like '%music%';
 
 Récupérer tous les albums écrits par AC/DC
-> SELECT * from albums inner join artists on albums.ArtistId = artists.ArtistId where artists.Name = 'AC/DC';
+> SELECT albums.Title from albums inner join artists on albums.ArtistId = artists.ArtistId where artists.Name = 'AC/DC';
 
 Récupérer tous les titres des albums de AC/DC
-> SELECT albums.Title from albums inner join artists on albums.ArtistId = artists.ArtistId where artists.Name = 'AC/DC';
+> SELECT tracks.Name from tracks where tracks.AlbumId in (SELECT AlbumId from albums natural join artists where artists.Name = 'AC/DC')
 
 Récupérer la liste des titres de l'album "Let There Be Rock"
 > SELECT tracks.Name from albums natural join tracks where albums.Title = 'Let There Be Rock';
 
 Afficher le prix de cet album ainsi que sa durée totale
-> SELECT sum(tracks.UnitPrice) from albums natural join tracks where albums.Title = 'Let There Be Rock';
+> SELECT sum(tracks.UnitPrice), sum(tracks.Milliseconds) from albums natural join tracks where albums.Title = 'Let There Be Rock';
 
 Afficher le coût de l'intégralité de la discographie de "Deep Purple"
 > SELECT sum(tracks.UnitPrice) from albums natural join tracks join artists where artists.Name = 'Deep Purple';
